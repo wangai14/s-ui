@@ -269,7 +269,10 @@ func writeStaticKey(t *testing.T) string {
 	if _, err := rand.Read(material); err != nil {
 		t.Fatal(err)
 	}
+	// Same shape as ServerService.generateOpenVPNStaticKey, comment header and
+	// all, so this covers what the panel's generate button hands over.
 	var body strings.Builder
+	body.WriteString("#\n# 2048 bit OpenVPN static key\n#\n")
 	body.WriteString("-----BEGIN OpenVPN Static key V1-----\n")
 	encoded := hex.EncodeToString(material)
 	for offset := 0; offset < len(encoded); offset += 32 {
